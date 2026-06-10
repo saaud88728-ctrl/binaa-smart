@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>غير متصل — بناء سمارت</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: #0A0A0F;
+  color: #F5F5F7;
+  font-family: 'Tajawal', -apple-system, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+.box {
+  text-align: center;
+  max-width: 460px;
+}
+.icon {
+  font-size: 80px;
+  margin-bottom: 24px;
+  animation: pulse 2s infinite ease-in-out;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.85; }
+}
+h1 {
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #F5A623, #D4AF37);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.02em;
+}
+p {
+  color: #B8B8C8;
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #F5A623, #B87A18);
+  color: #0A0A0F;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(245,166,35,0.25);
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.2s;
+}
+.btn:hover { transform: translateY(-2px); }
+.info {
+  margin-top: 32px;
+  padding: 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  text-align: right;
+  font-size: 14px;
+  color: #B8B8C8;
+  line-height: 1.8;
+}
+.info strong { color: #F5A623; }
+.dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #EF4444;
+  margin-left: 8px;
+  animation: blink 1.5s infinite;
+}
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="icon">📡</div>
+  <h1>أنت غير متصل</h1>
+  <p>
+    <span class="dot"></span>
+    لا يوجد اتصال بالإنترنت حالياً. لا تقلق — بياناتك آمنة محفوظة محلياً وستُزامن تلقائياً عند عودة الاتصال.
+  </p>
+  
+  <button class="btn" onclick="location.reload()">
+    🔄 إعادة المحاولة
+  </button>
+  
+  <div class="info">
+    <strong>ماذا يمكنك فعله الآن؟</strong>
+    <br><br>
+    • تصفّح البيانات التي حمّلتها مسبقاً<br>
+    • تسجيل المصروفات (ستُحفظ محلياً)<br>
+    • تسجيل الحضور والانصراف<br>
+    • كتابة التقارير اليومية<br><br>
+    <strong>عند عودة الاتصال:</strong> كل ما أضفته أوفلاين سيُرفع تلقائياً.
+  </div>
+</div>
+
+<script>
+// محاولة إعادة الاتصال تلقائياً كل 5 ثواني
+let attempts = 0;
+const check = setInterval(() => {
+  attempts++;
+  if (navigator.onLine) {
+    clearInterval(check);
+    location.reload();
+  }
+  if (attempts > 12) clearInterval(check); // توقف بعد دقيقة
+}, 5000);
+
+window.addEventListener('online', () => location.reload());
+</script>
+</body>
+</html>
